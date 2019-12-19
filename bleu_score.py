@@ -6,7 +6,7 @@ from tqdm import trange, tqdm
 from nltk.tokenize import WordPunctTokenizer
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 
-def main_bleu():
+def main_bleu(verbose=False):
     reference_answers = np.load('reference_answers.npy')
     sampled_answers_gpt = np.load('sampled_answers_gpt.npy')
     sampled_answers_bert = np.load('sampled_answers_bert.npy')    
@@ -37,8 +37,9 @@ def main_bleu():
 
 
     np.save('bleu_scores_bert.npy', np.array(score_list_bert))
-    print('gpt exceptions:', exp1)
-    print('bert exceptions:', exp2)
+    if(verbose):
+        print('gpt exceptions:', exp1)
+        print('bert exceptions:', exp2)
     
 if __name__ == '__main__':
     main_bleu()
