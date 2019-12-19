@@ -56,7 +56,7 @@ def wrap_message_list(m_list, insert_intro=True, wrap_type='QA', check_end_punct
     
     return output, [conditioning]
 
-def init_model(seed=0, model_path='gpt2'):
+def init_model(seed=0, model='gpt2'):
     '''
     Parameters:
     ----------
@@ -71,8 +71,8 @@ def init_model(seed=0, model_path='gpt2'):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
-    enc = GPT2Tokenizer.from_pretrained('gpt2-xl', cache_dir="../model_cache/")
-    model = GPT2LMHeadModel.from_pretrained('gpt2-xl', cache_dir="../model_cache/")
+    enc = GPT2Tokenizer.from_pretrained(model, cache_dir="../model_cache/")
+    model = GPT2LMHeadModel.from_pretrained(model, cache_dir="../model_cache/")
     
 #     model = nn.DataParallel(model)
 #     model.load_state_dict(torch.load(model_path))
@@ -234,7 +234,7 @@ def produce_answer(user_input, prev_msgs, max_words, top_k=10, temperature=1.0, 
     return answer
 
 def main_wrapper():
-    model, enc, device = init_model(42, "../gpt2_model_52800.pth")
+    model, enc, device = init_model(42, "gpt2-xl")
     messages = []
     questions = np.load('all_questions.npy')[-30000:]
     answers = np.load('gpt_answers.npy').tolist()
@@ -251,5 +251,19 @@ def main_wrapper():
             answers.append(output_text)
         np.save('gpt_answers.npy', np.array(answers))
 
+def small_wrapper(num_answers):
+    model, enc, device = init_model(42, "gpt2")
+    messages = []
+    questions = np.load('all_questions.npy')[-30000:]
+    answers = np.load('gpt_answers.npy').tolist()
+    tokenizer = WordPunctTokenizer()
+    for i in range(num_answers):
+        output_text = produce_answer(questions[i], messages, 30, 10, 1.0, False, model, enc, device, insert_intro=True, wrap_type='QA')
+        output_text = " ".join(tokenizer.tokenize(output_text)[:30])
+        print(i+1)
+        print(questions[i])
+        print(output_text)
+
+        
 if __name__ == '__main__':
     main_wrapper()
