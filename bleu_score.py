@@ -6,7 +6,7 @@ from tqdm import trange, tqdm
 from nltk.tokenize import WordPunctTokenizer
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 
-def main_blue():
+def main_bleu():
     reference_answers = np.load('reference_answers.npy')
     sampled_answers_gpt = np.load('sampled_answers_gpt.npy')
     sampled_answers_bert = np.load('sampled_answers_bert.npy')    
@@ -41,4 +41,4 @@ def main_blue():
     print('bert exceptions:', exp2)
     
 if __name__ == '__main__':
-    main_blue()
+    main_bleu()
