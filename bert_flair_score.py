@@ -31,7 +31,7 @@ def main_bert():
     for refed, sampled in tqdm(zip(reference_answers, sampled_answers_gpt)):
         
         score_list_gpt.append(criterion(refed, sampled, embedder))
-	    clear_output(True)
+        clear_output(True)
         
     np.save('bert_scores_gpt.npy', np.array(score_list_gpt))
 
