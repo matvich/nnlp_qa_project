@@ -15,7 +15,7 @@ def criterion(str1, str2, embed):
         embed.embed(s2)
         s2_emb = s2.get_embedding()
 
-        return torch.cosine_similarity(s1_emb.unsqueeze(0), s2_emb.unsqueeze(0))
+        return torch.cosine_similarity(s1_emb.unsqueeze(0), s2_emb.unsqueeze(0)).item()
     
     except:
         return 0.5
