@@ -71,8 +71,8 @@ def init_model(seed=0, model='gpt2'):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
-    enc = GPT2Tokenizer.from_pretrained(model, cache_dir="../model_cache/")
-    model = GPT2LMHeadModel.from_pretrained(model, cache_dir="../model_cache/")
+    enc = GPT2Tokenizer.from_pretrained(model, cache_dir="./model_cache/")
+    model = GPT2LMHeadModel.from_pretrained(model, cache_dir="./model_cache/")
     
 #     model = nn.DataParallel(model)
 #     model.load_state_dict(torch.load(model_path))
