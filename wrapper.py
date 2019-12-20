@@ -251,8 +251,8 @@ def main_wrapper():
             answers.append(output_text)
         np.save('gpt_answers.npy', np.array(answers))
 
-def small_wrapper(num_answers):
-    model, enc, device = init_model(42, "gpt2")
+def small_wrapper(num_answers, model='gpt2'):
+    model, enc, device = init_model(42, model)
     messages = []
     questions = np.load('all_questions.npy')[-30000:]
     answers = np.load('gpt_answers.npy').tolist()
